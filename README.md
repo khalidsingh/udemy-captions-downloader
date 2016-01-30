@@ -6,3 +6,5 @@ If you want to download all videos and materials from a course, check https://gi
 Usage:
 
     python udemy-captions.py EMAIL PASSWORD https://www.udemy.com/COURSE_NAME
+    
+It will create a folder named "captions" in the current directory. 
