@@ -81,8 +81,8 @@ def get_caption_links(data_value):
   html=session.get("https://www.udemy.com/new-lecture/view/?data="+data_value+"&xdm_e=https%3A%2F%2Fwww.udemy.com%2Fpenetration-testing%2Flearn%2F&xdm_c=default1724&xdm_p=4").text.replace("&amp;","&")
   return re.findall('"captions" src="(.*?)"',html)
 
-login(sys.argv[2],sys.argv[3])
-url=sys.argv[1]
+login(sys.argv[1],sys.argv[2])
+url=sys.argv[3]
 course_id=get_course_id(url)
 lectures=get_lecture_indexes(course_id,1,50)
 os.mkdir("captions")
@@ -94,8 +94,7 @@ for i in lectures:
 	os.mkdir("captions/Lecture_"+lectures[i])
 	for caption in get_caption_links(get_data_hash(course_id,i)):
 		captions[caption]=lectures[i]
-		sys.stdout.write("\rLecture #"+lectures[i]+": "+caption)
-		sys.stdout.flush()
+		print "Lecture #"+lectures[i]+": "+caption
 
 print "Start downloading captions..."
 
@@ -105,7 +104,6 @@ for link in captions:
     data=requests.get(link).content
     f.write(data)
     f.close()
-    sys.stdout.write("\r[OK] "+link.split("/")[4].split("?")[0])
-    sys.stdout.flush()
+    print "\r[OK] "+link.split("/")[4].split("?")[0]
   except:
     print "[CANNOT DOWNLOAD] "+link
